@@ -1,0 +1,45 @@
+@import "../../styles/variables.scss";
+
+.calc {
+  width: 405px;
+
+  &__title {
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 10px;
+  }
+
+  &__input_box {
+    margin: 24px 0 24px 0;
+    padding: 30px 20px 15px 20px;
+    border: 1px solid $borderColor;
+    font-family: sans-serif;
+
+    &__input {
+      outline: none;
+      border: none;
+      width: 100%;
+      font-weight: 500;
+      font-size: 44px;
+      margin-bottom: 30px;
+      -moz-appearance: textfield;
+
+      :focus {
+        border: none;
+      }
+      :active {
+        border: none;
+      }
+      ::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    &_rate {
+      font-size: 14px;
+      color: #888;
+    }
+  }
+}
