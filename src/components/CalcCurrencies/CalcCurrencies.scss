@@ -57,12 +57,13 @@
       margin-top: 10px;
       display: none;
       position: absolute;
-      width: 922px;
+      width: 925px;
       border-radius: 5px;
       box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2);
       top: 100%;
       left: -324px;
       padding: 15px 25px 5px 25px;
+      background-color: #fff;
 
       #{$self}_item {
         display: flex;

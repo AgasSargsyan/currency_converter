@@ -1,6 +1,6 @@
 import React from "react";
 import ChangeCalc from "../ChangeCalc";
-import Calc from "../Calc";
+import {Calc} from "../../containers";
 import "./Main.scss";
 
 const Main = () => {

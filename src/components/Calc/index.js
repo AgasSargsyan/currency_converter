@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import CalcCurrencies from "../CalcCurrencies";
 import "./Calc.scss";
 
@@ -14,12 +15,12 @@ const obj = [
     Name: "aa",
   },
   {
-    ID: "2",
+    ID: "3",
     CharCode: "EUR",
     Name: "aa",
   },
   {
-    ID: "2",
+    ID: "4",
     CharCode: "AMD",
     Name: "aa",
   },
@@ -325,13 +326,14 @@ const obj1 = [
   },
 ];
 
-const Calc = ({ title, listCurrenciesPositionLeft }) => {
+const Calc = ({ title, listCurrenciesPositionLeft, allCurrencies, mainCurrencies }) => {
+  
   return (
     <div className="calc">
       <div className="calc__title">{title}</div>
       <CalcCurrencies
         mainCurrencies={obj}
-        currencies={obj1}
+        allCurrencies={allCurrencies}
         listCurrenciesPositionLeft={listCurrenciesPositionLeft}
       />
       <div className="calc__input_box">
@@ -341,5 +343,11 @@ const Calc = ({ title, listCurrenciesPositionLeft }) => {
     </div>
   );
 };
+
+Calc.defaultProps = {
+  allCurrencies: [],
+  mainCurrencies: [],
+  listCurrenciesPositionLeft: false,
+}
 
 export default Calc;
