@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import ChangeCalc from "../ChangeCalc";
 import { currenciesActions } from "../../redux/actions";
-import { Calc } from "../../components";
+import { Calc } from "../../containers";
 import "./Main.scss";
 
-const Main = ({allCurrencies}) => {
+const Main = ({allCurrencies}) => { 
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,9 +23,9 @@ const Main = ({allCurrencies}) => {
                 <h2>РЫНОК НАЛИЧНОЙ ВАЛЮТЫ ПО ДАННЫМ ЦБ</h2>
             </div>
             <div className="main__body">
-                <Calc title={"У меня есть"} />
+                <Calc title={"У меня есть"}  currencieTo={false}/>
                 <ChangeCalc />
-                <Calc title={"Хочу приобрести"} currencieTo={"true"} />
+                <Calc title={"Хочу приобрести"}  currencieTo />
             </div>
         </div>
     );

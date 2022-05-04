@@ -1,29 +1,20 @@
 import { CalcCurrencies as BaseCalcCurrencies } from "../components";
 import { connect, useDispatch } from "react-redux";
-import { currenciesActions } from "../redux/actions";
-
-
-const RUR = {
-    ID: "1",
-    Name: "Российский рубль",
-    CharCode: "RUR",
-};
+import { currenciesActions, changeValueActions } from "../redux/actions";
 
 const CalcCurrencies = ({
     currencieTo,
     allCurrencies,
     mainCurrenciesFrom,
     mainCurrenciesTo,
+    changeFrom,
+    changeTo,
 }) => {
     const dispatch = useDispatch();
+    const mainCurr = currencieTo ? changeTo : changeFrom;
+    var mainCurrs = currencieTo ? mainCurrenciesTo : mainCurrenciesFrom;
+    var mainCurrencies = [...mainCurrs];
 
-    var mainCur = currencieTo ? mainCurrenciesTo : mainCurrenciesFrom;
-    var mainCurrencies = [...mainCur];
-    
-    if (mainCurrencies.length === 3) {
-        mainCurrencies.unshift(RUR);
-    }
-    
     const handlerSelectList = (e) => {
         const currenciesList = document.getElementsByClassName(
             "calc__currencies_list"
@@ -45,43 +36,37 @@ const CalcCurrencies = ({
     };
 
     const handlerSelectCurrencie = (e) => {
-        const elems = e.currentTarget.parentNode.childNodes;
-        const setectCurCode = e.currentTarget.dataset.cur;
-        Array.from(elems).forEach((elem) => {
-            if (!elem.isEqualNode(e.currentTarget)) {
-                elem.classList.remove("active");
-            }
-        });
+        document
+            .getElementsByClassName("calc__currencies_list")[0]
+            .classList.remove("active");
 
-        e.currentTarget.classList.add("active");
-        
-        const selectCur = findCur(setectCurCode)
-        dispatch(currenciesActions.setCurrencie(selectCur, currencieTo))
+        const selectCur = findCur(e.currentTarget.dataset.cur);
+        dispatch(currenciesActions.setCurrencie(selectCur, currencieTo));
     };
-
 
     const handlerListCurrencie = (e) => {
         const setectCurCode = e.currentTarget.dataset.cur;
         if (
-            mainCurrencies.filter((cur) => cur.CharCode === setectCurCode).length
+            mainCurrencies.filter((cur) => cur.CharCode === setectCurCode)
+                .length
         ) {
             return;
         }
-        const selectCur = findCur(setectCurCode)
-        // selectCur.active = true
+        const selectCur = findCur(setectCurCode);
+
         mainCurrencies.splice(mainCurrencies.length - 1, 1, selectCur);
         dispatch(currenciesActions.changeMain(mainCurrencies, currencieTo));
+        dispatch(currenciesActions.setCurrencie(selectCur, currencieTo));
     };
 
     const findCur = (charCode) => {
-        return allCurrencies.find(
-            (cur) => cur.CharCode === charCode
-        );
-    }
+        return allCurrencies.find((cur) => cur.CharCode === charCode);
+    };
 
     return (
         <BaseCalcCurrencies
-        currencieTo={currencieTo}
+            mainCurr={mainCurr}
+            currencieTo={currencieTo}
             allCurrencies={allCurrencies}
             mainCurrencies={mainCurrencies}
             handlerSelectCurrencie={handlerSelectCurrencie}

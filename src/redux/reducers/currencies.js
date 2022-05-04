@@ -9,17 +9,28 @@ const initialSatate = {
 const reducer = (state = initialSatate, { type, payload }) => {
     switch (type) {
         case "CURRENCIES:GET_ALL":
-            return { ...state, allCurrencies: payload };
+            return {
+                ...state,
+                allCurrencies: payload,
+                changeFrom: payload.find(
+                    (currencie) => currencie.CharCode === "RUR"
+                ),
+                changeTo: payload.find(
+                    (currencie) => currencie.CharCode === "USD"
+                ),
+            };
         case "CURRENCIES:SELECT_MAIN":
             return {
                 ...state,
                 mainCurrenciesFrom: payload.filter((currencie) =>
-                    ["USD", "EUR", "AMD"].indexOf(currencie.CharCode) != -1
+                    ["RUR", "USD", "EUR", "AMD"].indexOf(currencie.CharCode) !=
+                    -1
                         ? true
                         : false
                 ),
                 mainCurrenciesTo: payload.filter((currencie) =>
-                    ["USD", "EUR", "AMD"].indexOf(currencie.CharCode) != -1
+                    ["RUR", "USD", "EUR", "AMD"].indexOf(currencie.CharCode) !=
+                    -1
                         ? true
                         : false
                 ),
@@ -32,6 +43,12 @@ const reducer = (state = initialSatate, { type, payload }) => {
             return { ...state, changeFrom: payload };
         case "CURRENCIES:SET_TO":
             return { ...state, changeTo: payload };
+        case "CURRENCIES:SWITCH":
+            return {
+                ...state,
+                changeFrom: payload.changeTo,
+                changeTo: payload.changeFrom,
+            };
         default:
             return state;
     }
@@ -68,3 +85,9 @@ export const setCurrencieTo = (payload) => ({
     type: "CURRENCIES:SET_TO",
     payload,
 });
+
+export const switchCurrReducer = (payload) => ({
+    type: "CURRENCIES:SWITCH",
+    payload,
+});
+

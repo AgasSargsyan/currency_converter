@@ -11,6 +11,7 @@ const CalcCurrencies = ({
     handlerSelectCurrencie,
     handlerSelectList,
     handlerListCurrencie,
+    mainCurr,
 }) => {
     return (
         <div className="calc__currencies">
@@ -18,7 +19,10 @@ const CalcCurrencies = ({
                 mainCurrencies.map((mainCurrencie) => (
                     <div
                         className={classNames("calc__currencies_item", {
-                            active: mainCurrencie.active
+                            active:
+                                mainCurr.CharCode === mainCurrencie.CharCode
+                                    ? true
+                                    : false,
                         })}
                         key={mainCurrencie.ID}
                         onClick={(event) => handlerSelectCurrencie(event)}
@@ -51,7 +55,10 @@ const CalcCurrencies = ({
                     <div className="row">
                         {allCurrencies.map((currencie) => (
                             <div
-                                className={classNames("calc__currencies_list_item col col-sm-4", {active: currencie.active})}
+                                className={classNames(
+                                    "calc__currencies_list_item col col-sm-4",
+                                    {  active: mainCurr.CharCode === currencie.CharCode ? true : false }
+                                )}
                                 key={currencie.ID}
                                 data-cur={currencie.CharCode}
                                 onClick={(event) => handlerListCurrencie(event)}

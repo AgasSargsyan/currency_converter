@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 
-const reducers = ['currencies']
+const reducers = ['currencies', "changeValue"]
 
 export default combineReducers(
     reducers.reduce((initial, name) => {
