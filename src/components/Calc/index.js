@@ -18,7 +18,7 @@ const Calc = ({
     useEffect(() => {
             setValue(inputRef.current, false);
     }, [changeToValue]);
-
+      
     return (
         <div className="calc">
             <div className="calc__title">{title}</div>

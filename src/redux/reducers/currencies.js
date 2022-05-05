@@ -11,29 +11,15 @@ const reducer = (state = initialSatate, { type, payload }) => {
         case "CURRENCIES:GET_ALL":
             return {
                 ...state,
-                allCurrencies: payload,
-                changeFrom: payload.find(
-                    (currencie) => currencie.CharCode === "RUR"
-                ),
-                changeTo: payload.find(
-                    (currencie) => currencie.CharCode === "USD"
-                ),
+                allCurrencies: payload.allCurrencies,
+                changeFrom: payload.changeFrom,
+                changeTo: payload.changeTo,
             };
         case "CURRENCIES:SELECT_MAIN":
             return {
                 ...state,
-                mainCurrenciesFrom: payload.filter((currencie) =>
-                    ["RUR", "USD", "EUR", "AMD"].indexOf(currencie.CharCode) !=
-                    -1
-                        ? true
-                        : false
-                ),
-                mainCurrenciesTo: payload.filter((currencie) =>
-                    ["RUR", "USD", "EUR", "AMD"].indexOf(currencie.CharCode) !=
-                    -1
-                        ? true
-                        : false
-                ),
+                mainCurrenciesFrom: payload,
+                mainCurrenciesTo: payload,
             };
         case "CURRENCIES:CHAGE_FROM":
             return { ...state, mainCurrenciesFrom: payload };
@@ -90,4 +76,3 @@ export const switchCurrReducer = (payload) => ({
     type: "CURRENCIES:SWITCH",
     payload,
 });
-

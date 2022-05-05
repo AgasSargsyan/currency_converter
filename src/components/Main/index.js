@@ -12,7 +12,7 @@ const Main = ({allCurrencies}) => {
     useEffect(() => {
         dispatch(currenciesActions.fetchGetCurrencie());
     }, []);
-    
+      
     if(!allCurrencies.length) {
         return null
     }

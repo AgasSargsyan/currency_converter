@@ -46,13 +46,16 @@ const CalcCurrencies = ({
 
     const handlerListCurrencie = (e) => {
         const setectCurCode = e.currentTarget.dataset.cur;
+        const selectCur = findCur(setectCurCode);
+
         if (
             mainCurrencies.filter((cur) => cur.CharCode === setectCurCode)
                 .length
         ) {
+            dispatch(currenciesActions.setCurrencie(selectCur, currencieTo));
             return;
         }
-        const selectCur = findCur(setectCurCode);
+        
 
         mainCurrencies.splice(mainCurrencies.length - 1, 1, selectCur);
         dispatch(currenciesActions.changeMain(mainCurrencies, currencieTo));

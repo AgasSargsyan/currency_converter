@@ -22,10 +22,26 @@ const Action = {
         fetch("https://www.cbr-xml-daily.ru/daily_json.js")
             .then((response) => response.json())
             .then((json) => {
-                const valute = Object.values(json.Valute);
-                valute.unshift(RUR);
-                dispatch(currenciesGetAll(valute));
-                dispatch(currenciesSelectMain(valute));
+                const allCurrencies = Object.values(json.Valute);
+                allCurrencies.unshift(RUR);
+
+                const changeFrom = allCurrencies.find(
+                    (currencie) => currencie.CharCode === "RUR"
+                );
+                const changeTo = allCurrencies.find(
+                    (currencie) => currencie.CharCode === "USD"
+                );
+
+                dispatch(
+                    currenciesGetAll({ changeFrom, changeTo, allCurrencies })
+                );
+                const mainCurrencies =  allCurrencies.filter((currencie) =>
+                    ["RUR", "USD", "EUR", "AMD"].indexOf(currencie.CharCode) !=
+                    -1
+                        ? true
+                        : false
+                );
+                dispatch(currenciesSelectMain(mainCurrencies));
             });
     },
     changeMain: (mainCurrencies, currencieTo) => (dispatch) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import classNames from "classnames";
 import "./CalcCurrencies.scss";
 import arrowAllCurrencies from "../../assets/arrow_all_currencies.png";
@@ -13,6 +13,23 @@ const CalcCurrencies = ({
     handlerListCurrencie,
     mainCurr,
 }) => {
+    const listRef = useRef();
+
+    const handleClickOutSideList = (event) => {
+        if (!listRef.current.contains(event.target)) {
+            if (listRef.current.classList.contains("active")) {
+                listRef.current.classList.remove("active");
+            }
+        }
+    };
+    
+    useEffect(() => {
+        document.addEventListener("click", handleClickOutSideList);
+
+        return () =>
+            document.removeEventListener("click", handleClickOutSideList);
+    }, []);
+
     return (
         <div className="calc__currencies">
             {mainCurrencies.length &&
@@ -38,6 +55,7 @@ const CalcCurrencies = ({
                 ))}
             <div
                 className={"calc__currencies_list"}
+                ref={listRef}
                 onClick={(event) => handlerSelectList(event)}
             >
                 <div className="calc__currencies_list_icons">
@@ -57,7 +75,13 @@ const CalcCurrencies = ({
                             <div
                                 className={classNames(
                                     "calc__currencies_list_item col col-sm-4",
-                                    {  active: mainCurr.CharCode === currencie.CharCode ? true : false }
+                                    {
+                                        active:
+                                            mainCurr.CharCode ===
+                                            currencie.CharCode
+                                                ? true
+                                                : false,
+                                    }
                                 )}
                                 key={currencie.ID}
                                 data-cur={currencie.CharCode}
